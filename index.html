@@ -58,6 +58,15 @@ footer {margin-top:15px;font-size:11px;opacity:0.6;}
 }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+/* Login message */
+#loginMessage {              /* NEW */
+  margin-top:10px;
+  font-size:13px;
+  font-weight:600;
+}
+.success { color: #4CAF50; } /* hijau */
+.error { color: #FF5252; }   /* merah */
+
 /* Sorry screen */
 #sorryCard {display:none;}
 .message-box {
@@ -103,6 +112,7 @@ footer {margin-top:15px;font-size:11px;opacity:0.6;}
   <input type="password" id="password" placeholder="Password">
   <button id="loginBtn">Login</button>
   <div id="spinner"></div>
+  <div id="loginMessage"></div> <!-- NEW -->
 </div>
 
 <!-- Sorry screen -->
@@ -168,19 +178,28 @@ document.getElementById("loginBtn").addEventListener("click",()=>{
   const user=document.getElementById("username").value.trim();
   const pass=document.getElementById("password").value.trim();
   const spinner=document.getElementById("spinner");
+  const msg=document.getElementById("loginMessage");
 
   spinner.style.display="block";
   document.getElementById("loginBtn").disabled = true;
+  msg.textContent=""; // reset pesan
 
   setTimeout(()=>{
     spinner.style.display="none";
     document.getElementById("loginBtn").disabled = false;
 
     if(user==="zyrex" && pass==="free"){
-      document.getElementById("loginCard").style.display="none";
-      document.getElementById("sorryCard").style.display="block";
+      msg.textContent="Login Successfull ✅";   // NEW
+      msg.className="success";                  // NEW
+
+      setTimeout(()=>{
+        document.getElementById("loginCard").style.display="none";
+        document.getElementById("sorryCard").style.display="block";
+      },800);
+
     } else {
-      alert("Username atau password salah!");
+      msg.textContent="Login Failed ❌";        // NEW
+      msg.className="error";                    // NEW
     }
   }, 1000);
 });
